@@ -5,7 +5,7 @@ module Api::V1
     # GET /users
     def index
       scope = User.all
-      scope = scope.where('users.name ilike ? OR users.email ilike ?', "%#{params[:name]}%") if params[:name]
+      scope = scope.where('users.name ilike :filter OR users.email ilike :filter', {filter: "%#{params[:name]}%"}) if params[:name]
       @users = scope
 
       render json: @users
